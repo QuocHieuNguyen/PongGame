@@ -275,15 +275,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 563620405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 251dc7db9857fae4e8c9293b45173db2, type: 3}
+  m_Script: {fileID: 11500000, guid: 969b77ac27267ca4cbac8e7b318f7b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: ws://http://localhost:3000/socket.io/?EIO=3&transport=websocket
-  autoConnect: 0
-  reconnectDelay: 5
-  ackExpirationTime: 30
-  pingInterval: 25
-  pingTimeout: 60
 --- !u!4 &563620407
 Transform:
   m_ObjectHideFlags: 0
