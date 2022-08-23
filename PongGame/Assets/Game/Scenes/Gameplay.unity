@@ -680,8 +680,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Racket (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6844677263846105898, guid: 138f28376f89769459a51aca5b934fea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 138f28376f89769459a51aca5b934fea, type: 3}
+--- !u!1 &1969506860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6844677263846105898, guid: 138f28376f89769459a51aca5b934fea, type: 3}
+  m_PrefabInstance: {fileID: 6396557371069050993}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1969506861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969506860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a20a043c738c4044afa179bf0919be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveRacket: {fileID: 1969506862}
+--- !u!114 &1969506862 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6396557371069050996, guid: 138f28376f89769459a51aca5b934fea, type: 3}
+  m_PrefabInstance: {fileID: 6396557371069050993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969506860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718ca5be29ec22a4f9268acaba2d050d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2592753864374553807
 PrefabInstance:
   m_ObjectHideFlags: 0
