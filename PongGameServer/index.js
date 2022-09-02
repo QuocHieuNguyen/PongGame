@@ -1,5 +1,7 @@
+// import
 const express = require('express');
 const app = express();
+const racket = require('./src/services/racket.service')
 var server = require('http').createServer();
 var cors = require("cors");
 const corsOptions = {
@@ -13,18 +15,20 @@ const io = require("socket.io")(server, {
     credentials: false
   }
 });
+// cors
 app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+global._io = io; 
 io.on('connection', (socket) => {
   console.log('a user connected');
-  io.emit('chat message');
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
+
+  socket.on('chat message', racket.move);
+
+  console.log(socket.id);
   socket.on('beep', function () {
     socket.emit('boop');
   });
