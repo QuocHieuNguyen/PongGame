@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const racket = require('./src/services/racket.service')
+const constants = require('./src/constants/constants')
 var server = require('http').createServer();
 var cors = require("cors");
 const corsOptions = {
@@ -23,12 +24,16 @@ app.get('/', (req, res) => {
 });
 
 global._io = io; 
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  socket.on('chat message', racket.move);
-
-  console.log(socket.id);
+  //socket.on('chat message', racket.move);
+  //socket.on(constants.MOVE, racket.move);
+  socket.on(constants.MOVE, (msg)=> {
+    console.log(msg)
+    socket.emit(constants.MOVE, 1);
+  });
   socket.on('beep', function () {
     socket.emit('boop');
   });

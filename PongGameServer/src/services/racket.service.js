@@ -1,6 +1,11 @@
+const constants = require('../constants/constants')
 module.exports = {
      move(msg) {
-        _io.emit(msg + " from racket service ");
-        console.log(msg + " from racket service ")
+        // _io.emit(constants.MOVE, {
+        //     x:1,
+        //     y:1
+        // });
+        console.log(msg)
+        _io.emit(constants.MOVE, 1);
     }
 }
