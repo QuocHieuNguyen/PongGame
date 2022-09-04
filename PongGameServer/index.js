@@ -28,6 +28,15 @@ io.on('connection', (socket) => {
   socket.on('beep', function () {
     socket.emit('boop');
   });
+  socket.on('player move', function(data) {
+		
+    //let moveData = JSON.stringify(data);
+    console.log('move: '+ data["position"]);
+    console.log('move: '+ data);
+    console.log('move: '+ data.position);
+    socket.emit('player move', data)
+		//socket.broadcast.emit('player move', currentPlayer);
+	});
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
