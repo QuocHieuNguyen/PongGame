@@ -447,6 +447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   socket: {fileID: 244102842}
+  localPlayer: {fileID: 0}
+  otherPlayer: {fileID: 1786938539}
 --- !u!1 &1043149095
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +718,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 138f28376f89769459a51aca5b934fea, type: 3}
+--- !u!114 &1786938539 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8118428071224607925, guid: 138f28376f89769459a51aca5b934fea, type: 3}
+  m_PrefabInstance: {fileID: 1786938538}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c8edc3ff57132040984d91f988a5db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1969506860 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6844677263846105898, guid: 138f28376f89769459a51aca5b934fea, type: 3}
