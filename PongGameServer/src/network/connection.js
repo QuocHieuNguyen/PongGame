@@ -21,6 +21,18 @@ module.exports = class Connection {
             server.onAttemptToJoinGame(connection);
         });
 
+        socket.on('fetchAllLobbyData', ()=>{
+            server.onDisplayLobbyData(connection)
+        });
+        socket.on('createNewLobby', ()=>{
+            server.OnCreateNewLobby(connection)
+        })
+        socket.on('fetchCurrentLobby', (id)=>{
+            server.OnFetchCurrentLobby(connection, id)
+        })
+        socket.on('joinSpecificLobby', (id)=>{
+            server.JoinSpecificLobby(connection, id)
+        })
         // socket.on('fireBullet', function(data) {
         //     connection.lobby.onFireBullet(connection, data);
         // });

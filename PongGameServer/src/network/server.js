@@ -92,7 +92,64 @@ module.exports = class Server {
             server.onSwitchLobby(connection, gamelobby.id);
         }
     }
+    onDisplayLobbyData(connection = Connection){
+        let server = this;
+        console.log(server.lobbys)
+        let lobbyIdArray = []
+        for (let i = 0; i < server.lobbys.length; i++) {
+            const element = server.lobbys[i];
+            lobbyIdArray.push(element.id)
+            
+        }
+        connection.socket.emit('onDisplayLobbyData', lobbyIdArray)
+        // let gameLobbies = server.lobbys.filter(item => {
+        //     return item instanceof GameLobby;
+        // });
+        // gameLobbies.forEach(lobby =>{
+        //     lobby.onDisplayLobbyData(connection)
+   
+        // })
+    }
+    OnCreateNewLobby(connection = Connection){
+        let server = this
+        let gamelobby = new GameLobby(server.lobbys.length + 1, new GameLobbySettings('FFA', 2));
+        server.lobbys.push(gamelobby);
+        connection.socket.emit('onCreateNewLobby', gamelobby)
 
+    }
+    OnFetchCurrentLobby(connection = Connection, id){
+        let server = this
+        let targetLobby = null;
+        
+        for (let i = 0; i < server.lobbys.length; i++) {
+            const element = server.lobbys[i];
+            if (element.id == id){
+                targetLobby = element
+            }else{
+                console.log("not found " + element.id)
+                
+            }
+        }
+        if (targetLobby !== null){
+            
+            if (connection.player.lobby == targetLobby.id){
+                connection.socket.emit('OnFetchCurrentLobby', targetLobby.id)
+            }else{
+                connection.socket.emit('OnFetchCurrentLobby', -2)
+            }
+        }else{
+            connection.socket.emit('OnFetchCurrentLobby', -1)
+        }
+    }
+    JoinSpecificLobby(connection = Connection, id){
+        let server = this
+        let gameLobbies = server.lobbys.filter(item => {
+            return item.id == id;
+        });
+        if (gameLobbies.length > 0){
+            connection.socket.emit('OnJoinSpecificLobby', -1)
+        }
+    }
     onSwitchLobby(connection = Connection, lobbyID) {
         let server = this;
         let lobbys = server.lobbys;
@@ -103,4 +160,5 @@ module.exports = class Server {
         lobbys[connection.player.lobby].onLeaveLobby(connection);
         lobbys[lobbyID].onEnterLobby(connection);
     }
+
 }

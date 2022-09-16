@@ -50,7 +50,20 @@ module.exports = class GameLobbby extends lobbyBase {
         //Handle unspawning any server spawned objects here
         //Example: loot, perhaps flying bullets etc
     }
+    onDisplayLobbyData(connection = Connection){
+        let lobby = this;
+        //lobby.displayLobbyData();
+        //console.log("call this")
+        //connection.socket.emit('get lobby data', lobby.connections[0].player);
+    }
+    displayLobbyData(){
+        let lobby = this;
+        let connections = lobby.connections;
 
+        connections.forEach(connection => {
+            //connection.socket.emit('get lobby data', lobby);
+        });
+    }
     updateBullets() {
         let lobby = this;
         let bullets = lobby.bullets;
