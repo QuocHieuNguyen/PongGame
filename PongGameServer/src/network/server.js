@@ -160,5 +160,21 @@ module.exports = class Server {
         lobbys[connection.player.lobby].onLeaveLobby(connection);
         lobbys[lobbyID].onEnterLobby(connection);
     }
+    HostGame(connection = Connection){
+        let server = this
+        let gameLobbies = server.lobbys.filter(item => {
+            return item instanceof GameLobby;
+        });
+        let gamelobby = new GameLobby(gameLobbies.length + 1, new GameLobbySettings('FFA', 2));
+        server.lobbys.push(gamelobby);
+        server.onSwitchLobby(connection, gamelobby.id);
+    }
+    LeftGame(connection = Connection){
+        let server = this;
+        let lobbys = server.lobbys;
+
+        lobbys[connection.player.lobby].onLeaveLobby(connection);
+        lobbys[0].onEnterLobby(connection);
+    }
 
 }
