@@ -39,6 +39,9 @@ module.exports = class Connection {
         socket.on('leftRoom', ()=>{
             server.LeftGame(connection)
         })
+        socket.on('fetchPlayerDataInLobby', ()=>{
+            server.DisplayLobbyPlayerData(connection)
+        })
         // socket.on('fireBullet', function(data) {
         //     connection.lobby.onFireBullet(connection, data);
         // });

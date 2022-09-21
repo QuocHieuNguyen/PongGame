@@ -148,7 +148,11 @@ module.exports = class Server {
         });
         if (gameLobbies.length > 0){
             connection.socket.emit('OnJoinSpecificLobby', -1)
+            server.onSwitchLobby(connection, id)
+        }else{
+            
         }
+        
     }
     onSwitchLobby(connection = Connection, lobbyID) {
         let server = this;
@@ -175,6 +179,10 @@ module.exports = class Server {
 
         lobbys[connection.player.lobby].onLeaveLobby(connection);
         lobbys[0].onEnterLobby(connection);
+    }
+    DisplayLobbyPlayerData(connection = Connection){
+        let server = this;
+        connection.lobby.onDisplayLobbyPlayerData(connection)
     }
 
 }
