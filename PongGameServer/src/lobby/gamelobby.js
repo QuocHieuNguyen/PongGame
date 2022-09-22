@@ -35,7 +35,10 @@ module.exports = class GameLobbby extends lobbyBase {
         super.onEnterLobby(connection);
 
         lobby.addPlayer(connection);
-
+        lobby.connections.forEach(_connection => {
+            
+            _connection.socket.emit('New Player Enter Lobby', connection.player.id);
+        });
         //Handle spawning any server spawned objects here
         //Example: loot, perhaps flying bullets etc
     }
