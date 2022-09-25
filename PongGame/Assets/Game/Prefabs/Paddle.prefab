@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 4878993754238235857}
   - component: {fileID: 6396557371069050995}
   - component: {fileID: 5868120676079084281}
-  - component: {fileID: 6396557371069050996}
+  - component: {fileID: 7070872784504476410}
   m_Layer: 0
-  m_Name: Racket
+  m_Name: Paddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3840847, y: 1.4902186}
   m_EdgeRadius: 0
---- !u!114 &6396557371069050996
+--- !u!114 &7070872784504476410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,11 +172,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6844677263846105898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 718ca5be29ec22a4f9268acaba2d050d, type: 3}
+  m_Script: {fileID: 11500000, guid: 460cb9da144105c4e98b11e9f5450a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6396557371069050995}
-  speed: 2
+  paddleData: {fileID: 11400000, guid: e9b38519983db3142b204ade84fea25b, type: 2}
+  inputAxisName: Vertical
 --- !u!1 &8546220521334292055
 GameObject:
   m_ObjectHideFlags: 0
