@@ -35,7 +35,10 @@ module.exports = class GameLobbby extends lobbyBase {
         super.onEnterLobby(connection);
 
         lobby.addPlayer(connection);
-
+        lobby.connections.forEach(_connection => {
+            
+            _connection.socket.emit('New Player Enter Lobby', connection.player.id);
+        });
         //Handle spawning any server spawned objects here
         //Example: loot, perhaps flying bullets etc
     }
@@ -55,6 +58,16 @@ module.exports = class GameLobbby extends lobbyBase {
         //lobby.displayLobbyData();
         //console.log("call this")
         //connection.socket.emit('get lobby data', lobby.connections[0].player);
+    }
+    onDisplayLobbyPlayerData(connection = Connection){
+        let playerIDs = []
+        let lobby = this;
+        let connections = lobby.connections;
+        connections.forEach(_connection => {
+            playerIDs.push(_connection.player.id)
+            //connection.socket.emit('get lobby data', lobby);
+        });
+        connection.socket.emit('The Player IDs is', playerIDs)
     }
     displayLobbyData(){
         let lobby = this;
