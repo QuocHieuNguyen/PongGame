@@ -42,6 +42,9 @@ module.exports = class Connection {
         socket.on('fetchPlayerDataInLobby', ()=>{
             server.DisplayLobbyPlayerData(connection)
         })
+        socket.on('setName', (name)=>{
+            server.SetPlayerName(connection, name);
+        })
         // socket.on('fireBullet', function(data) {
         //     connection.lobby.onFireBullet(connection, data);
         // });

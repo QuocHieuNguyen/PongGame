@@ -180,9 +180,14 @@ module.exports = class Server {
         lobbys[connection.player.lobby].onLeaveLobby(connection);
         lobbys[0].onEnterLobby(connection);
     }
+
     DisplayLobbyPlayerData(connection = Connection){
         let server = this;
         connection.lobby.onDisplayLobbyPlayerData(connection)
+    }
+    SetPlayerName(connection = Connection, name){
+        connection.player.username = name;
+        console.log("The new player name is " + connection.player.username);
     }
 
 }

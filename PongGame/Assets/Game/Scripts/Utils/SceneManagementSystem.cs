@@ -19,7 +19,21 @@ public class SceneManagementSystem : Singleton<SceneManagementSystem>
     // Update is called once per frame
     void Update()
     {
+        for (int i = levelsLoading.Count - 1; i >= 0; i--) {
+            if (levelsLoading[i] == null) {
+                levelsLoading.RemoveAt(i);
+                continue;
+            }
 
+            if (levelsLoading[i].ao.isDone) {
+                levelsLoading[i].ao.allowSceneActivation = true; //Needed to make sure the scene while fully loaded gets turned on for the player
+                levelsLoading[i].onLevelLoaded.Invoke(levelsLoading[i].sceneName);
+                currentlyLoadedScenes.Add(levelsLoading[i].sceneName);
+                levelsLoading.RemoveAt(i);
+                //Hide your loading screen here
+                //ApplicationManager.Instance.HideLoadingScreen();
+            }
+        }
     }
     public void LoadLevel(string levelName, Action<string> onLevelLoaded, bool isShowingLoadingScreen = false)
     {
@@ -72,5 +86,6 @@ public static class SceneList
 {
     public const string INTRO = "Intro";
     public const string LOGIN = "Login";
+    public const string LOBBY = "Lobby";
     public const string ONLINE = "Online";
 }
