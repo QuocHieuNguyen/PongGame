@@ -94,21 +94,22 @@ module.exports = class Server {
     }
     onDisplayLobbyData(connection = Connection){
         let server = this;
-        console.log(server.lobbys)
+        
         let lobbyIdArray = []
         for (let i = 0; i < server.lobbys.length; i++) {
             const element = server.lobbys[i];
-            lobbyIdArray.push(element.id)
+            if (element instanceof GameLobby){
+                lobbyIdArray.push(element.id)
+            }
+           
             
         }
-        connection.socket.emit('onDisplayLobbyData', lobbyIdArray)
-        // let gameLobbies = server.lobbys.filter(item => {
-        //     return item instanceof GameLobby;
-        // });
-        // gameLobbies.forEach(lobby =>{
-        //     lobby.onDisplayLobbyData(connection)
-   
-        // })
+        console.log(lobbyIdArray)
+        let lobbyDataPayload = {
+            "lobbyArray": lobbyIdArray
+        }
+        connection.socket.emit('onDisplayLobbyData', lobbyDataPayload)
+
     }
     OnCreateNewLobby(connection = Connection){
         let server = this

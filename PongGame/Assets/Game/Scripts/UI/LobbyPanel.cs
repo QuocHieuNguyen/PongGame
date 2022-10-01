@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
+using SimpleJSON;
 using System;
 public class LobbyPanel : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class LobbyPanel : MonoBehaviour
     }
     private void OnEnable() {
         SocketReference.On("onDisplayLobbyData", OnFetchAllLobbyDataCallback);
-        GetLobbyData();
+        //GetLobbyData();
     }
     public void RefreshLobby(){
         SocketReference.Emit("fetchAllLobbyData");
@@ -27,10 +28,12 @@ public class LobbyPanel : MonoBehaviour
         SocketReference.Emit("fetchAllLobbyData");
     }
     private void OnFetchAllLobbyDataCallback(SocketIOEvent socketEvent){
-        Debug.Log(socketEvent.data);
+        Debug.Log(socketEvent.data["lobbyArray"].Count);
+        //JSONNode jsonData = JSON.Parse(System.Text.Encoding.UTF8.GetString(socketEvent.data));
+
     }
     private void OnDisable() {
-        SocketReference.Off("onDisplayLobbyData", OnFetchAllLobbyDataCallback);
+        
     }
 
 }
