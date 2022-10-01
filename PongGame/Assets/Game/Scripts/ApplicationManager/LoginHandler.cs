@@ -19,13 +19,12 @@ public class LoginHandler : MonoBehaviour
 
     public void Connect()
     {
-        Debug.Log(inputField.text);
         SocketReference.Connect();
-
+        SocketReference.Emit("setName", inputField.text);
         SceneManagementSystem.Instance.LoadLevel(SceneList.LOBBY, (value) =>
         {
             SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOGIN);
-            SocketReference.Emit("SetName", inputField.text);
+            
         });
     }
 }

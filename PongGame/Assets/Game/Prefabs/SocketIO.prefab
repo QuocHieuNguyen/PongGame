@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7732874589171139194}
-  - component: {fileID: 4704070351838649517}
+  - component: {fileID: 7580759922797062620}
   m_Layer: 0
   m_Name: SocketIO
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4704070351838649517
+--- !u!114 &7580759922797062620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +40,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9059849124331982756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 763f91ba537f277489d47c9e64e64463, type: 3}
+  m_Script: {fileID: 11500000, guid: ec666f6bef1e2894ea3d91e3b07e9cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   url: ws://127.0.0.1:3000/socket.io/?EIO=3&transport=websocket

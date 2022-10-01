@@ -144,14 +144,16 @@ module.exports = class Server {
     }
     JoinSpecificLobby(connection = Connection, id){
         let server = this
+        console.log("Player " + connection.player.username + " join room " + id)
         let gameLobbies = server.lobbys.filter(item => {
             return item.id == id;
         });
+        console.log(gameLobbies.length)
         if (gameLobbies.length > 0){
-            connection.socket.emit('OnJoinSpecificLobby', -1)
+            //connection.socket.emit('OnJoinSpecificLobby', -1)
             server.onSwitchLobby(connection, id)
         }else{
-            
+            //connection.socket.emit('OnJoinSpecificLobby', -100)
         }
         
     }
@@ -189,6 +191,9 @@ module.exports = class Server {
     SetPlayerName(connection = Connection, name){
         connection.player.username = name;
         console.log("The new player name is " + connection.player.username);
+    }
+    GetName(connection = Connection){
+        connection.socket.emit('GetName', connection.player.username)
     }
 
 }
