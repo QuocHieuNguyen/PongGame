@@ -20,11 +20,15 @@ public class LoginHandler : MonoBehaviour
     public void Connect()
     {
         SocketReference.Connect();
-        SocketReference.Emit("setName", inputField.text);
-        SceneManagementSystem.Instance.LoadLevel(SceneList.LOBBY, (value) =>
+        EmitEventDelay.Instance.ExecuteEventDelay((() =>
         {
-            SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOGIN);
+            SocketReference.Emit("setName", inputField.text);
+            SceneManagementSystem.Instance.LoadLevel(SceneList.LOBBY, (value) =>
+            {
+                SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOGIN);
             
-        });
+            });
+        }));
+
     }
 }

@@ -21,12 +21,25 @@ public class LobbyPanel : MonoBehaviour
             return socketReference = (socketReference == null) ? FindObjectOfType<SocketIOComponent>() : socketReference;
         }
     }
-    private void OnEnable() {
+    private void OnEnable()
+    {
+        SubscribeToEvent();
+        InvokeEventToNetworkClient();
+    }
+
+    private void InvokeEventToNetworkClient()
+    {
+        EmitEventDelay.Instance.ExecuteEventDelay(GetLobbyData);
+        EmitEventDelay.Instance.ExecuteEventDelay(RequestGetName);
+    }
+
+    private void SubscribeToEvent()
+    {
         SocketReference.On("onDisplayLobbyData", OnFetchAllLobbyDataCallback);
         SocketReference.On("GetName", SetName);
-        StartCoroutine(GetLobbyDataDelay(GetLobbyData));
-        StartCoroutine(GetLobbyDataDelay(RequestGetName));
+        SocketReference.On("OnJoinSpecificLobby", ChangeToRoomScene);
     }
+
     public void RefreshLobby(){
         SocketReference.Emit("fetchAllLobbyData");
     }
@@ -51,10 +64,18 @@ public class LobbyPanel : MonoBehaviour
 
     }
 
-    private IEnumerator GetLobbyDataDelay(Action postDelayFunction)
+    private void ChangeToRoomScene(SocketIOEvent socketEvent)
     {
-        yield return new WaitForSeconds(0.2f);
-        postDelayFunction();
+        if (socketEvent.data["response_code"].ToString() == "-1")
+        {
+            Debug.Log("Switch room");
+            SceneManagementSystem.Instance.LoadLevel(SceneList.ROOM, (value) =>
+            {
+                SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOBBY);
+            
+            });
+        }
+
     }
 
     private void RequestGetName()
@@ -63,7 +84,8 @@ public class LobbyPanel : MonoBehaviour
     }
     private void SetName(SocketIOEvent socketEvent)
     {
-        nameText.text = socketEvent.data.ToString();
+        string value = socketEvent.data["name"].ToString(false);
+        nameText.text = value;
     }
     private void OnDisable() {
         

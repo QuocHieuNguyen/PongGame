@@ -43,7 +43,6 @@ module.exports = class Connection {
             server.DisplayLobbyPlayerData(connection)
         })
         socket.on('setName', (name)=>{
-            console.log(name)
             server.SetPlayerName(connection, name);
         })
         socket.on('getName', ()=>{

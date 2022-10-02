@@ -63,11 +63,18 @@ module.exports = class GameLobbby extends lobbyBase {
         let playerIDs = []
         let lobby = this;
         let connections = lobby.connections;
+        console.log("display player data")
         connections.forEach(_connection => {
             playerIDs.push(_connection.player.id)
             //connection.socket.emit('get lobby data', lobby);
         });
-        connection.socket.emit('The Player IDs is', playerIDs)
+        let payload = {
+            "host_name" : connections[0].player.username 
+        }
+        if (connections.length > 1){
+            payload.opponent_name = connections[1].player.username
+        }
+        connection.socket.emit('DisplayPlayerData', payload)
     }
     displayLobbyData(){
         let lobby = this;

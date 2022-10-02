@@ -87,5 +87,6 @@ public static class SceneList
     public const string INTRO = "Intro";
     public const string LOGIN = "Login";
     public const string LOBBY = "Lobby";
+    public const string ROOM = "Room";
     public const string ONLINE = "Online";
 }

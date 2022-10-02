@@ -153,7 +153,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6538933616026383482}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -411,7 +411,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6538933616026383482}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -571,7 +571,7 @@ RectTransform:
   m_Children:
   - {fileID: 1851738412}
   m_Father: {fileID: 6538933616026383482}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -886,13 +886,28 @@ GameObject:
   - component: {fileID: 6538933616026383482}
   - component: {fileID: 6535154605181657962}
   - component: {fileID: 6354642637753195606}
+  - component: {fileID: 6460051003576149441}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: RoomPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6460051003576149441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460051003576149440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5994c9f445aa84388f91fcaef93927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hostNameText: {fileID: 1448924566}
+  opponentNameText: {fileID: 1714664330}
 --- !u!1 &6460051003999681494
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,10 +989,10 @@ RectTransform:
   m_Children:
   - {fileID: 6538933618304466290}
   - {fileID: 1448924565}
+  - {fileID: 1714664329}
   - {fileID: 6538933616377152310}
   - {fileID: 1983108415}
   - {fileID: 588873381}
-  - {fileID: 1714664329}
   m_Father: {fileID: 1513150595}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -999,7 +1014,7 @@ RectTransform:
   m_Children:
   - {fileID: 6538933617830595536}
   m_Father: {fileID: 6538933616026383482}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}

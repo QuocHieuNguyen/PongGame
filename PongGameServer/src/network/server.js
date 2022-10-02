@@ -150,10 +150,16 @@ module.exports = class Server {
         });
         console.log(gameLobbies.length)
         if (gameLobbies.length > 0){
-            //connection.socket.emit('OnJoinSpecificLobby', -1)
+            let payload = {
+                "response_code": -1
+            }
+            connection.socket.emit('OnJoinSpecificLobby', payload)
             server.onSwitchLobby(connection, id)
         }else{
-            //connection.socket.emit('OnJoinSpecificLobby', -100)
+            let payload = {
+                "response_code": -100
+            }
+            connection.socket.emit('OnJoinSpecificLobby', payload)
         }
         
     }
@@ -193,7 +199,10 @@ module.exports = class Server {
         console.log("The new player name is " + connection.player.username);
     }
     GetName(connection = Connection){
-        connection.socket.emit('GetName', connection.player.username)
+        let payload = {
+            "name" : connection.player.username
+        }
+        connection.socket.emit('GetName', payload)
     }
 
 }
