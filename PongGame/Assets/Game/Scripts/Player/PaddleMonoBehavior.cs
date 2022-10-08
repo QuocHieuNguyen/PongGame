@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SocketIO;
 
 public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
 {
@@ -9,12 +10,15 @@ public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
     private PaddleInput paddleInput;
     private PaddleSimulation paddleSimulation;
     private PaddleLogic paddleLogic;
+
+    private PaddleNetwork paddleNetwork;
     // Start is called before the first frame update
     void Awake()
     {
         paddleInput = new PaddleInput(inputAxisName);
         paddleSimulation = new PaddleSimulation();
-        paddleLogic = new PaddleLogic(this, paddleData, paddleInput, paddleSimulation);
+        paddleNetwork = new PaddleNetwork(FindObjectOfType<SocketIOComponent>());
+        paddleLogic = new PaddleLogic(this, paddleData, paddleInput, paddleSimulation, paddleNetwork);
     }
 
     // Update is called once per frame

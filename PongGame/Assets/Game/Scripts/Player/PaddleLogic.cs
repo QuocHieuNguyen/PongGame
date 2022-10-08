@@ -9,12 +9,20 @@ public class PaddleLogic
     private readonly PaddleInput paddleInput;
     private readonly PaddleSimulation paddleSimulation;
 
-    public PaddleLogic(IPositionAdapter positionAdapter, PaddleData paddleData, PaddleInput paddleInput, PaddleSimulation paddleSimulation)
+    private readonly PaddleNetwork paddleNetwork;
+
+    public PaddleLogic(IPositionAdapter positionAdapter, 
+    PaddleData paddleData, 
+    PaddleInput paddleInput, 
+    PaddleSimulation paddleSimulation,
+    PaddleNetwork paddleNetwork)
     {
         this.positionAdapter = positionAdapter;
         this.paddleData = paddleData;
         this.paddleInput = paddleInput;
         this.paddleSimulation = paddleSimulation;
+        this.paddleNetwork = paddleNetwork;
+        paddleNetwork.onUpdatePosition += UpdatePositionAdapter;
     }
 
     public void Update(float deltaTime)
@@ -24,6 +32,15 @@ public class PaddleLogic
 
         Vector3 curPos = positionAdapter.Position;
         Vector3 newPos = new Vector3(curPos.x, yPos * paddleData.PositionScale, curPos.z);
-        positionAdapter.Position = newPos;
+        if (newPos != curPos)
+        {
+            Debug.Log("Send Data");
+            paddleNetwork.SendData(curPos.x, yPos * paddleData.PositionScale);
+        }
+        
+    }
+    private void UpdatePositionAdapter(float x, float y){
+        Vector3 curPos = positionAdapter.Position;
+        positionAdapter.Position = new Vector3(curPos.x, y * paddleData.PositionScale, curPos.z);;
     }
 }

@@ -49,4 +49,15 @@ public class RoomPanelHandler : MonoBehaviour
         opponentNameText.text = socketIOEvent.data["opponent_name"].ToString();
         Debug.Log(socketIOEvent.data);
     }
+    public void ChangeScene(){
+        Debug.Log("Change Scene");
+        SceneManagementSystem.Instance.LoadLevel(SceneList.GAME_PLAY, (value)=>{
+            //SceneManagementSystem.Instance.UnLoadLevel(SceneList.ROOM);
+        });
+    }
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)){
+            ChangeScene();
+        }
+    }
 }

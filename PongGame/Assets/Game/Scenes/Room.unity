@@ -349,7 +349,7 @@ Canvas:
   m_GameObject: {fileID: 1513150591}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -780,9 +780,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LoginHandler, Assembly-CSharp
-        m_MethodName: Connect
+      - m_Target: {fileID: 6460051003576149441}
+        m_TargetAssemblyTypeName: RoomPanelHandler, Assembly-CSharp
+        m_MethodName: ChangeScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -31,18 +31,18 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    private GameCore.NetworkClient networkClient;
+
 
     private void Awake() {
-        networkClient = new OfflineServer();
+       
     }
     public void Subscribe(string key, Action<object> value){
-        networkClient.Listen(key,value);
+        //networkClient.Listen(key,value);
     }
     public void Invoke(string key, object value){
-        networkClient.Invoke(key, value);
+     //   networkClient.Invoke(key, value);
     }
     public void Unsubscribe(string key, Action<object> value){
-        networkClient.StopListen(key, value);
+     //   networkClient.StopListen(key, value);
     }
 }

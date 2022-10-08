@@ -1,3 +1,5 @@
+const Vector2 = require("../utils/vector2");
+
 module.exports = class Connection {
     constructor() {
         this.socket;
@@ -47,6 +49,13 @@ module.exports = class Connection {
         })
         socket.on('getName', ()=>{
             server.GetName(connection)
+        })
+        socket.on('updatePosition', (pos)=>{
+            console.log("pos " + JSON.stringify(pos))
+            let position = new Vector2(pos.x, pos.y);
+            player.position = position
+            //socket.broadcast.to(connection.lobby.id).emit('updatePosition', position)
+            socket.emit('updatePosition', position)
         })
         // socket.on('fireBullet', function(data) {
         //     connection.lobby.onFireBullet(connection, data);
