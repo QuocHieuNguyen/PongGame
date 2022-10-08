@@ -72,6 +72,11 @@ public class SceneManagementSystem : Singleton<SceneManagementSystem>
 
         Debug.LogErrorFormat("Failed to unload level ({0}), most likely was never loaded to begin with or was already unloaded.", levelName);
     }
+
+    public void MoveObjectToScene(GameObject gameObject, string sceneName)
+    {
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName(sceneName));
+    }
 }
 
 [Serializable]

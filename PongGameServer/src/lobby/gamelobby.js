@@ -7,6 +7,8 @@ module.exports = class GameLobbby extends lobbyBase {
     constructor(id, settings = lobbySetting) {
         super(id);
         this.settings = settings;
+        this.hostPlayer = null;
+        this.isGameStarted = false;
         //this.bullets = [];
     }
 
@@ -39,6 +41,12 @@ module.exports = class GameLobbby extends lobbyBase {
             
             _connection.socket.emit('New Player Enter Lobby', connection.player.id);
         });
+        if (lobby.connections.length == 1){
+            this.hostPlayer = connection;
+        }
+        if (lobby.connections.length == 2){
+            this.guestPlayer = connection;
+        }
         //Handle spawning any server spawned objects here
         //Example: loot, perhaps flying bullets etc
     }
@@ -69,11 +77,16 @@ module.exports = class GameLobbby extends lobbyBase {
             //connection.socket.emit('get lobby data', lobby);
         });
         let payload = {
-            "host_name" : connections[0].player.username 
+            "host_name" : connections[0].player.username,
+            "role": "player"
         }
         if (connections.length > 1){
             payload.opponent_name = connections[1].player.username
         }
+        if (connection.player.id == lobby.hostPlayer.player.id){
+            payload.role = "host"
+        }
+
         connection.socket.emit('DisplayPlayerData', payload)
     }
     displayLobbyData(){
@@ -108,6 +121,18 @@ module.exports = class GameLobbby extends lobbyBase {
                 });
             }
         });
+    }
+    StartGame(connection = Connection){
+        let lobby = this;
+        if (lobby.hostPlayer.player.id == connection.player.id){
+            console.log("Permission granted to host: Start Game ")
+            lobby.isGameStarted = true;
+            lobby.connections.forEach(_connection => {
+                _connection.socket.emit('GameIsStarted');
+            });
+        }else{
+            console.log("no start game permission granted to non-host")
+        }
     }
 
     updateDeadPlayers() {

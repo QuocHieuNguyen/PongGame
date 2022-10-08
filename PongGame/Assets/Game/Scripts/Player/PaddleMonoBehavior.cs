@@ -12,19 +12,38 @@ public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
     private PaddleLogic paddleLogic;
 
     private PaddleNetwork paddleNetwork;
+
+    private bool isControlling =false;
     // Start is called before the first frame update
     void Awake()
     {
-        paddleInput = new PaddleInput(inputAxisName);
-        paddleSimulation = new PaddleSimulation();
-        paddleNetwork = new PaddleNetwork(FindObjectOfType<SocketIOComponent>());
-        paddleLogic = new PaddleLogic(this, paddleData, paddleInput, paddleSimulation, paddleNetwork);
+
     }
 
+    public void Init()
+    {
+        paddleInput = new PaddleInput(inputAxisName);
+        paddleSimulation = new PaddleSimulation();
+        paddleNetwork = new PaddleNetwork(FindObjectOfType<SocketIOComponent>(), isControlling);
+        paddleLogic = new PaddleLogic(this, paddleData, paddleInput, paddleSimulation, paddleNetwork);
+    }
+    public void SetControlling(bool isControlling)
+    {
+        this.isControlling = isControlling;
+        if (!isControlling)
+        {
+            inputAxisName = "";
+        }
+
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-        paddleLogic.Update(Time.deltaTime);
+        if (paddleLogic != null)
+        {
+            paddleLogic.Update(Time.deltaTime);
+        }
+       
     }
 
     public Vector3 Position

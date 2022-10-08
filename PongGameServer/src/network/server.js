@@ -204,5 +204,8 @@ module.exports = class Server {
         }
         connection.socket.emit('GetName', payload)
     }
+    StartGame(connection = Connection){
+        connection.lobby.StartGame(connection)
+    }
 
 }

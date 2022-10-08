@@ -9,14 +9,31 @@ public class PaddleNetwork
 {
     private SocketIOComponent socketIOComponent;
     public Action<float, float> onUpdatePosition;
+    private Vector2 currPos;
+    private bool isControlling = false;
 
-    public PaddleNetwork(SocketIOComponent socketIOComponent){
+    public PaddleNetwork(SocketIOComponent socketIOComponent, bool isControlling){
         this.socketIOComponent = socketIOComponent;
-        socketIOComponent.On("updatePosition", UpdatePosition);
+        this.isControlling = isControlling;
+        ValidateSendData();
+    }
+    
+    public void ValidateSendData()
+    {
+        if (isControlling)
+        {
+            socketIOComponent.On("updatePosition", UpdatePosition);
+        }
     }
     public void SendData(float x, float y){
         Vector2 position = new Vector2(x, y);
-        socketIOComponent.Emit("updatePosition", new JSONObject(JsonUtility.ToJson(position)));
+        if (position != currPos)
+        {
+            socketIOComponent.Emit("updatePosition", new JSONObject(JsonUtility.ToJson(position)));
+            currPos = position;
+        }
+
+        
     }
     private void UpdatePosition(SocketIOEvent socketIOEvent){
         Debug.Log("Get Data");

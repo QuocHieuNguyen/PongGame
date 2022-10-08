@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PaddleData
   m_EditorClassIdentifier: 
   MovementSpeedScaleFactor: 0.1
-  PositionScale: 1
+  PositionScale: 8
