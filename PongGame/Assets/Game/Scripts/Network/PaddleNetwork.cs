@@ -17,12 +17,20 @@ public class PaddleNetwork
         this.isControlling = isControlling;
         ValidateSendData();
     }
-    
+
+    public bool GetIsControlling()
+    {
+        return isControlling;
+    }
     public void ValidateSendData()
     {
         if (isControlling)
         {
             socketIOComponent.On("updatePosition", UpdatePosition);
+        }
+        else
+        {
+            socketIOComponent.On("updatePositionState", UpdatePosition);
         }
     }
     public void SendData(float x, float y){

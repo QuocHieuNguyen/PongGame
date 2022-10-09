@@ -27,6 +27,10 @@ public class PaddleLogic
 
     public void Update(float deltaTime)
     {
+        if (!paddleNetwork.GetIsControlling())
+        {
+            return;
+        }
         float inputAxisReading = paddleInput.ReadInput();
         float yPos = paddleSimulation.UpdatePosition(inputAxisReading, paddleData.MovementSpeedScaleFactor, deltaTime);
 

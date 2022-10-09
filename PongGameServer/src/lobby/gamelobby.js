@@ -2,6 +2,7 @@ const Connection = require("../network/connection")
 const lobbyBase = require("./lobbybase")
 
 const lobbySetting = require("./lobby.setting")
+const Vector2 = require("../utils/vector2");
 
 module.exports = class GameLobbby extends lobbyBase {
     constructor(id, settings = lobbySetting) {
@@ -134,7 +135,14 @@ module.exports = class GameLobbby extends lobbyBase {
             console.log("no start game permission granted to non-host")
         }
     }
-
+    UpdatePosition(connection = Connection, pos){
+        let lobby = this
+        let position = new Vector2(pos.x, pos.y);
+        console.log(pos)
+        connection.player.position = position
+        connection.socket.broadcast.to(lobby.id).emit('updatePositionState', position)
+        connection.socket.emit('updatePosition', position)
+    }
     updateDeadPlayers() {
         let lobby = this;
         let connections = lobby.connections;

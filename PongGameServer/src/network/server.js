@@ -6,6 +6,7 @@ const LobbyBase = require('../lobby/lobbybase')
 const GameLobby = require('../lobby/gamelobby')
 const GameLobbySettings = require('../lobby/lobby.setting')
 
+
 module.exports = class Server {
     constructor() {
         this.connections = [];
@@ -179,6 +180,7 @@ module.exports = class Server {
             return item instanceof GameLobby;
         });
         let gamelobby = new GameLobby(gameLobbies.length + 1, new GameLobbySettings('FFA', 2));
+        connection.socket.emit("hostSucceed")
         server.lobbys.push(gamelobby);
         server.onSwitchLobby(connection, gamelobby.id);
     }
@@ -206,6 +208,15 @@ module.exports = class Server {
     }
     StartGame(connection = Connection){
         connection.lobby.StartGame(connection)
+    }
+    UpdatePosition(connection = Connection, pos){
+        let server = this
+        let gameLobbies = server.lobbys.filter(item => {
+            return item.id == connection.lobby.id;
+        });
+        if (gameLobbies.length > 0){
+            gameLobbies[0].UpdatePosition(connection, pos)
+        }
     }
 
 }
