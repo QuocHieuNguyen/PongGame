@@ -10,10 +10,7 @@ public class WallMonoBehavior : MonoBehaviour
     {
         wallLogic = new WallLogic(1);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        wallLogic.Hit();
-
-
+    private void OnCollisionEnter(Collision other) {
+        Debug.Log(other.gameObject.name);
     }
 }

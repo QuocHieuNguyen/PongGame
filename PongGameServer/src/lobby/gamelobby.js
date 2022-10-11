@@ -2,6 +2,7 @@ const Connection = require("../network/connection")
 const lobbyBase = require("./lobbybase")
 
 const lobbySetting = require("./lobby.setting")
+const Ball = require("../ball")
 const Vector2 = require("../utils/vector2");
 
 module.exports = class GameLobbby extends lobbyBase {
@@ -15,7 +16,7 @@ module.exports = class GameLobbby extends lobbyBase {
 
     onUpdate() {
         let lobby = this;
-
+        lobby.updateBall()
         //lobby.updateBullets();
         //lobby.updateDeadPlayers();
     }
@@ -98,6 +99,26 @@ module.exports = class GameLobbby extends lobbyBase {
             //connection.socket.emit('get lobby data', lobby);
         });
     }
+    updateBall(){
+        let lobby = this;
+        let connections = lobby.connections;
+
+        if (lobby.ball != null){
+            let ball = lobby.ball
+            ball.onUpdate();
+            let returnData = {
+                id: ball.id,
+                position: {
+                    x: ball.position.x,
+                    y: ball.position.y
+                }
+            }
+
+            connections.forEach(connection => {
+                connection.socket.emit('updateBallPosition', returnData);
+            });
+        }
+    }
     updateBullets() {
         let lobby = this;
         let bullets = lobby.bullets;
@@ -131,6 +152,7 @@ module.exports = class GameLobbby extends lobbyBase {
             lobby.connections.forEach(_connection => {
                 _connection.socket.emit('GameIsStarted');
             });
+            this.ball = new Ball()
         }else{
             console.log("no start game permission granted to non-host")
         }
