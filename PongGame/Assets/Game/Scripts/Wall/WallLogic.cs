@@ -10,7 +10,9 @@ public class WallLogic
     {
         this.playerScoreId = playerScoreId;
     }
-
+    public void Collide(IBall ball, IBallCollision ballCollision){
+        ball.OnBallCollisionEnter(ballCollision);
+    }
     public void Hit()
     {
         Debug.Log("Get Point");

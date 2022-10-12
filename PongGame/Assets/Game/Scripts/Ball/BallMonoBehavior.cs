@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
 
-public class BallMonoBehavior : MonoBehaviour, ILocalPositionAdapter
+public class BallMonoBehavior : MonoBehaviour, ILocalPositionAdapter, IBall
 {
     public Vector3 InitialVelocity;
 
@@ -29,5 +29,9 @@ public class BallMonoBehavior : MonoBehaviour, ILocalPositionAdapter
     private void FixedUpdate()
     {
         //_ballLogic.Update(Time.deltaTime);
+    }
+    public void OnBallCollisionEnter(IBallCollision collider)
+    {
+        _ballLogic.OnCollisionEnter(collider);
     }
 }

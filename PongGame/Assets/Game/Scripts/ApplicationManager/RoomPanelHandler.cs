@@ -67,8 +67,6 @@ public class RoomPanelHandler : MonoBehaviour
         });
     }
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)){
-            RequestChangeScene();
-        }
+
     }
 }

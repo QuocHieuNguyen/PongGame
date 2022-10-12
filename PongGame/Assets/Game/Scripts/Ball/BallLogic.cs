@@ -24,4 +24,9 @@ public class BallLogic
         Vector3 newPos = ballSimulator.UpdatePosition(currentPos, Time.deltaTime);
         localPositionAdapter.LocalPosition = newPos;
     }
+    public void OnCollisionEnter(IBallCollision collider)
+    {
+        Debug.Log("Reflect from wall");
+        ballSimulator.ReflectVelocityVertically();
+    }
 }

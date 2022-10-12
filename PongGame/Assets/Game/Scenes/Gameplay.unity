@@ -890,6 +890,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7981821698426381334, guid: 10c2cf61a1df73241a41d359705697cd, type: 3}
+      propertyPath: InitialVelocity.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7981821698426381334, guid: 10c2cf61a1df73241a41d359705697cd, type: 3}
+      propertyPath: InitialVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7257415572229298149, guid: 10c2cf61a1df73241a41d359705697cd, type: 3}
     - {fileID: 8224430943863467630, guid: 10c2cf61a1df73241a41d359705697cd, type: 3}
