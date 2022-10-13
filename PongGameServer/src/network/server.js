@@ -218,5 +218,14 @@ module.exports = class Server {
             gameLobbies[0].UpdatePosition(connection, pos)
         }
     }
+    ReflectFromWall(connection = Connection){
+        let server = this
+        let gameLobbies = server.lobbys.filter(item => {
+            return item.id == connection.lobby.id;
+        });
+        if (gameLobbies.length > 0){
+            gameLobbies[0].ReflectFromWall(connection)
+        }
+    }
 
 }

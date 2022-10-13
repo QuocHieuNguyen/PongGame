@@ -28,7 +28,7 @@ public class BallMonoBehavior : MonoBehaviour, ILocalPositionAdapter, IBall
 
     private void FixedUpdate()
     {
-        //_ballLogic.Update(Time.deltaTime);
+        _ballLogic.Update();
     }
     public void OnBallCollisionEnter(IBallCollision collider)
     {

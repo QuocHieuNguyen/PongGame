@@ -145,61 +145,16 @@ module.exports = class GameLobbby extends lobbyBase {
         connection.socket.broadcast.to(lobby.id).emit('updatePositionState', position)
         connection.socket.emit('updatePosition', position)
     }
-    updateDeadPlayers() {
-        let lobby = this;
-        let connections = lobby.connections;
-
-        connections.forEach(connection => {
-            let player = connection.player;
-
-            if (player.isDead) {
-                let isRespawn = player.respawnCounter();
-                if (isRespawn) {
-                    let socket = connection.socket;
-                    let returnData = {
-                        id: player.id,
-                        position: {
-                            x: player.position.x,
-                            y: player.position.y
-                        }
-                    }
-
-                    socket.emit('playerRespawn', returnData);
-                    socket.broadcast.to(lobby.id).emit('playerRespawn', returnData);
-                }
-            }
-        });
-    }
-
-    onFireBullet(connection = Connection, data) {
-        let lobby = this;
-
-        let bullet = new Bullet();
-        bullet.name = 'Bullet';
-        bullet.activator = data.activator;
-        bullet.position.x = data.position.x;
-        bullet.position.y = data.position.y;
-        bullet.direction.x = data.direction.x;
-        bullet.direction.y = data.direction.y;
-
-        lobby.bullets.push(bullet);
-
-        var returnData = {
-            name: bullet.name,
-            id: bullet.id,
-            activator: bullet.activator,
-            position: {
-                x: bullet.position.x,
-                y: bullet.position.y
-            },
-            direction: {
-                x: bullet.direction.x,
-                y: bullet.direction.y
-            }
+    ReflectFromWall(connection = Connection){
+        let lobby = this
+        if (!lobby.isPlayingGame){
+            return
         }
-
-        connection.socket.emit('serverSpawn', returnData);
-        connection.socket.broadcast.to(lobby.id).emit('serverSpawn', returnData); //Only broadcast to those in the same lobby as us
+        if (lobby.ball == null){
+            return
+        }
+        
+        lobby.ball.reflectDirection(false)
     }
 
     onCollisionDestroy(connection = Connection, data) {

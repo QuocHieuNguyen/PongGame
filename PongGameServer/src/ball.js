@@ -5,18 +5,24 @@ module.exports = class Ball {
     constructor() {
         this.id = shortID.generate();
         this.name = "Ball"
-        this.speed = 1;
+        this.speed = 0.1;
         this.position = new Vector2();
-        this.direction = new Vector2(1,0);
+        this.direction = new Vector2(1,2);
        
     }
 
     onUpdate() {   
-        this.position.x = this.lerp(this.direction.x, this.direction.x * this.speed, 0.4);  
-        this.position.y = this.lerp(this.direction.y, this.direction.y * this.speed, 0.4);  
-        //this.position.x += this.direction.x * this.speed;
-        //this.position.y += this.direction.y * this.speed;
-
+        // this.position.x = this.lerp(this.direction.x, this.direction.x * this.speed, 0.4);  
+        // this.position.y = this.lerp(this.direction.y, this.direction.y * this.speed, 0.4);  
+        this.position.x += this.direction.x * this.speed;
+        this.position.y += this.direction.y * this.speed;
+    }
+    reflectDirection(isHorizontally){
+        if (isHorizontally){
+            this.direction = new Vector2(-this.direction.x, this.direction.y)
+        }else{
+            this.direction = new Vector2(this.direction.x, -this.direction.y)
+        }
     }
     lerp(a, b, amount){
         return (1 - amount) * a + amount * b;

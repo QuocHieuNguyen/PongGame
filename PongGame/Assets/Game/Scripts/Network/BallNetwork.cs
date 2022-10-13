@@ -20,4 +20,7 @@ public class BallNetwork {
         float y = socketIOEvent.data["position"]["y"].f;
         onUpdatePosition?.Invoke (x, y);
     }
+    public void RequestReflectFromWall(){
+        socketIOComponent.Emit("reflectFromWall");
+    }
 }
