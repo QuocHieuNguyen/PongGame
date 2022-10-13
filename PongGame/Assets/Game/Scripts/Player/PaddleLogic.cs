@@ -47,4 +47,7 @@ public class PaddleLogic
         Vector3 curPos = positionAdapter.Position;
         positionAdapter.Position = new Vector3(curPos.x, y * paddleData.PositionScale, curPos.z);;
     }
+    public void Collide(IBall ball, IBallCollision ballCollision){
+        ball.OnBallCollisionEnter(ballCollision);
+    }
 }

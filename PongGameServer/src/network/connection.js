@@ -59,6 +59,9 @@ module.exports = class Connection {
         socket.on('reflectFromWall', ()=>{
             server.ReflectFromWall(connection)
         })
+        socket.on('reflectFromPaddle', ()=>{
+            server.ReflectFromPaddle(connection)
+        })
         // socket.on('fireBullet', function(data) {
         //     connection.lobby.onFireBullet(connection, data);
         // });

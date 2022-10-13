@@ -5,9 +5,9 @@ module.exports = class Ball {
     constructor() {
         this.id = shortID.generate();
         this.name = "Ball"
-        this.speed = 0.1;
+        this.speed = 0.05;
         this.position = new Vector2();
-        this.direction = new Vector2(1,2);
+        this.direction = new Vector2(-1,2);
        
     }
 

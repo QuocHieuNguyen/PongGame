@@ -156,6 +156,17 @@ module.exports = class GameLobbby extends lobbyBase {
         
         lobby.ball.reflectDirection(false)
     }
+    ReflectFromPaddle(connection = Connection){
+        let lobby = this
+        if (!lobby.isPlayingGame){
+            return
+        }
+        if (lobby.ball == null){
+            return
+        }
+        
+        lobby.ball.reflectDirection(true)
+    }
 
     onCollisionDestroy(connection = Connection, data) {
         let lobby = this;

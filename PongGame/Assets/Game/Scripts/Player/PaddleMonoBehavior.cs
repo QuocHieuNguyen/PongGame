@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
 
-public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
+public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter, IBallCollision
 {
     public PaddleData paddleData;
     [SerializeField] private string inputAxisName;
@@ -46,9 +46,18 @@ public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
        
     }
 
+    public void Collide(IBall ball)
+    {
+        paddleLogic.Collide(ball, this);
+    }
+
     public Vector3 Position
     {
         get => transform.position;
         set => transform.position = value;
+    }
+    private void OnCollisionEnter(Collision other) {
+        Debug.Log("Reflect from paddle");
+        Collide(other.gameObject.GetComponent<IBall>());
     }
 }

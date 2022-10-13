@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class BallLogic
 {
     private BallSimulator ballSimulator;
@@ -20,19 +21,25 @@ public class BallLogic
         ballNetwork.onUpdatePosition += UpdatePosition;
     }
     public void Update(){
-        localPositionAdapter.LocalPosition 
-        = Vector3.Lerp(localPositionAdapter.LocalPosition, syncTransform, Time.deltaTime);
+        // localPositionAdapter.LocalPosition 
+        // = Vector3.Lerp(localPositionAdapter.LocalPosition, syncTransform, Time.deltaTime);
     }
     public void UpdatePosition(float x, float y)
     {
         Vector3 currentPos = new Vector3(x,y, localPositionAdapter.LocalPosition.z);
         Vector3 newPos = ballSimulator.UpdatePosition(currentPos, Time.deltaTime);
+        localPositionAdapter.LocalPosition = newPos;
         syncTransform = newPos;
     }
     public void OnCollisionEnter(IBallCollision collider)
     {
         Debug.Log("Reflect from wall");
-        ballNetwork.RequestReflectFromWall();
+        if (collider is WallMonoBehavior){
+            ballNetwork.RequestReflectFromWall();
+        }else if (collider is PaddleMonoBehavior){
+            ballNetwork.RequestReflectFromPaddle();
+        }
+       
         syncTransform = localPositionAdapter.LocalPosition;
     }
 }

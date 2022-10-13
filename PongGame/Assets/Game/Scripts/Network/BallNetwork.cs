@@ -23,4 +23,7 @@ public class BallNetwork {
     public void RequestReflectFromWall(){
         socketIOComponent.Emit("reflectFromWall");
     }
+    public void RequestReflectFromPaddle(){
+        socketIOComponent.Emit("reflectFromPaddle");
+    }
 }
