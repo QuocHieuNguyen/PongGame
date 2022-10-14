@@ -12,6 +12,6 @@ Some features might be added in the future:
 
 The project is inspired by two other projects:
 Client: 
-[Kalmalyzer/Pong]: https://github.com/Kalmalyzer/Pong
+[Kalmalyzer/Pong](https://github.com/Kalmalyzer/Pong)
 Server: 
-[Multiplayer_Game_With_Unity_And_NodeJS]: https://github.com/oohicksyoo/Youtube-Multiplayer_Game_With_Unity_And_NodeJS
+[Multiplayer_Game_With_Unity_And_NodeJS](https://github.com/oohicksyoo/Youtube-Multiplayer_Game_With_Unity_And_NodeJS)
