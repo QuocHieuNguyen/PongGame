@@ -48,6 +48,7 @@ module.exports = class GameLobbby extends lobbyBase {
         }
         if (lobby.connections.length == 2) {
             this.guestPlayer = connection;
+            this.hostPlayer.socket.emit('OpponentEnterLobby', connection.player.username)
         }
         //Handle spawning any server spawned objects here
         //Example: loot, perhaps flying bullets etc

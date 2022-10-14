@@ -1,20 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SocketIO;
+using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    private SocketIOComponent socketReference;
+    private SocketInterface socketReference;
     [SerializeField] private PaddleMonoBehavior paddlePrefab;
-    public PaddleMonoBehavior paddleControllingPlayer, paddleOpponent;
+    public PaddleMonoBehavior paddleHost, paddleOpponent;
+
+    [SerializeField] private GoalMonoBehavior hostGoal, opponentGoal;
     public Transform controllingPlayerPosition, opponentPosition;
-    public SocketIOComponent SocketReference
+    public SocketInterface SocketReference
     {
         get
         {
-            return socketReference = (socketReference == null) ? FindObjectOfType<SocketIOComponent>() : socketReference;
+            return socketReference = (socketReference == null) ? FindObjectOfType<SocketInterface>() : socketReference;
         }
     }
 
@@ -25,14 +27,26 @@ public class GameplayManager : MonoBehaviour
 
     public void InitGame()
     {
-        paddleControllingPlayer = Instantiate(paddlePrefab, controllingPlayerPosition.position, Quaternion.identity);
+        paddleHost = Instantiate(paddlePrefab, controllingPlayerPosition.position, Quaternion.identity);
         paddleOpponent = Instantiate(paddlePrefab, opponentPosition.position, Quaternion.identity);
-        paddleControllingPlayer.SetControlling(true);
-        paddleOpponent.SetControlling(false);
-        
-        paddleControllingPlayer.Init();
+        if (SocketReference.isHost)
+        {
+            paddleHost.SetHasAuthority(true);
+            paddleOpponent.SetHasAuthority(false);
+            hostGoal.Init(1);
+            opponentGoal.Init(0);
+        }
+        else
+        {
+            paddleHost.SetHasAuthority(false);
+            paddleOpponent.SetHasAuthority(true);
+            hostGoal.Init(0);
+            opponentGoal.Init(1);
+        }
+
+        paddleHost.Init();
         paddleOpponent.Init();
-        SceneManagementSystem.Instance.MoveObjectToScene(paddleControllingPlayer.gameObject, SceneList.GAME_PLAY);
+        SceneManagementSystem.Instance.MoveObjectToScene(paddleHost.gameObject, SceneList.GAME_PLAY);
         SceneManagementSystem.Instance.MoveObjectToScene(paddleOpponent.gameObject, SceneList.GAME_PLAY);
     }
 }

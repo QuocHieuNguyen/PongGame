@@ -54,6 +54,11 @@ public class LobbyPanel : MonoBehaviour
     }
     private void OnFetchAllLobbyDataCallback(SocketIOEvent socketEvent){
         Debug.Log(socketEvent.data["lobbyArray"].Count);
+        for (int i = 0; i < _roomButtons.Count; i++)
+        {
+            UnityEngine.Object.Destroy(_roomButtons[i].gameObject);
+        }
+        //_roomButtons.Clear();
         for (int i = 0; i < socketEvent.data["lobbyArray"].Count; i++)
         {
             RoomButton instance = Instantiate(roomButton, roomButtonParent);
@@ -86,7 +91,14 @@ public class LobbyPanel : MonoBehaviour
     }
     void ChangeRoom()
     {
-        SceneManagementSystem.Instance.LoadLevel(SceneList.ROOM, (value) =>
+        LoadScene(SceneList.ROOM);
+    }
+    public void LeaveRoom(){
+        SocketReference.Close();
+        LoadScene(SceneList.LOGIN);
+    }
+    void LoadScene(string sceneName){
+        SceneManagementSystem.Instance.LoadLevel(sceneName, (value) =>
         {
             SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOBBY);
             

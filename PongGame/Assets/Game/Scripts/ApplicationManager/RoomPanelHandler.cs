@@ -7,22 +7,24 @@ using SocketIO;
 
 public class RoomPanelHandler : MonoBehaviour
 {
+    public bool isHost = false;
     [SerializeField] private Text hostNameText;
 
     [SerializeField] private Text opponentNameText;
     [SerializeField] private Button startGameButton;
-    private SocketIOComponent socketReference;
+    private SocketInterface socketReference;
 
-    public SocketIOComponent SocketReference
+    public SocketInterface SocketReference
     {
         get
         {
-            return socketReference = (socketReference == null) ? FindObjectOfType<SocketIOComponent>() : socketReference;
+            return socketReference = (socketReference == null) ? FindObjectOfType<SocketInterface>() : socketReference;
         }
     }
 
     private void OnEnable()
     {
+        
         SubscribeToEvent();
         InvokeEventToNetworkClient();
     }
@@ -30,6 +32,7 @@ public class RoomPanelHandler : MonoBehaviour
     {
         SocketReference.On("DisplayPlayerData", SetName);
         SocketReference.On("GameIsStarted", ChangeScene);
+        SocketReference.On("OpponentEnterLobby", OnOpponentEnterLobby);
 
     }
     private void InvokeEventToNetworkClient()
@@ -45,11 +48,13 @@ public class RoomPanelHandler : MonoBehaviour
 
     private void SetName(SocketIOEvent socketIOEvent)
     {
+        SocketReference.isHost = false;
         hostNameText.text = socketIOEvent.data["host_name"].ToString();
         opponentNameText.text = socketIOEvent.data["opponent_name"].ToString();
         if (socketIOEvent.data["role"].ToString() != "host")
         {
             startGameButton.interactable = false;
+            isHost = true;
         }
         Debug.Log(socketIOEvent.data);
     }
@@ -61,12 +66,13 @@ public class RoomPanelHandler : MonoBehaviour
     void ChangeScene(SocketIOEvent socketIOEvent)
     {
         Debug.Log("Change Scene");
+        SocketReference.isHost = true;
         SceneManagementSystem.Instance.LoadLevel(SceneList.GAME_PLAY, (value)=>{
             SceneManagementSystem.Instance.UnLoadLevel(SceneList.ROOM);
             
         });
     }
-    private void Update() {
-
+    void OnOpponentEnterLobby(SocketIOEvent socketIOEvent){
+        opponentNameText.text = socketIOEvent.data.ToString();
     }
 }

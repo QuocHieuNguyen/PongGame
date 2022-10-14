@@ -222,24 +222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40a5d0dbe5d90247b03d95b6c2a4cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &470122621736822993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508655404076229495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 763f91ba537f277489d47c9e64e64463, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  url: ws://127.0.0.1:3000/socket.io/?EIO=3&transport=websocket
-  autoConnect: 0
-  reconnectDelay: 5
-  ackExpirationTime: 30
-  pingInterval: 25
-  pingTimeout: 60
 --- !u!1 &508655404076229495
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8381643050877378218}
-  - component: {fileID: 470122621736822993}
+  - component: {fileID: 508655404076229496}
   m_Layer: 0
   m_Name: SocketObject
   m_TagString: Untagged
@@ -257,6 +239,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &508655404076229496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508655404076229495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6902f7898b398de42827edd4e1ef97a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  url: ws://127.0.0.1:3000/socket.io/?EIO=3&transport=websocket
+  autoConnect: 0
+  reconnectDelay: 5
+  ackExpirationTime: 30
+  pingInterval: 25
+  pingTimeout: 60
+  isHost: 0
 --- !u!4 &8381643050877378218
 Transform:
   m_ObjectHideFlags: 0

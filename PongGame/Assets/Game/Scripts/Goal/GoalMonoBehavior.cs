@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallMonoBehavior : MonoBehaviour, IBallCollision
+public class GoalMonoBehavior : MonoBehaviour, IBallCollision
 {
-    private WallLogic wallLogic;
+
+    private GoalLogic goalLogic;
     // Start is called before the first frame update
     void Start()
     {
-        wallLogic = new WallLogic();
+        
+    }
+    public void Init(int playerScoreId){
+        goalLogic = new GoalLogic(playerScoreId);
     }
     private void OnCollisionEnter(Collision other) {
         IBall ball = other.gameObject.GetComponent<IBall>();
@@ -20,6 +24,6 @@ public class WallMonoBehavior : MonoBehaviour, IBallCollision
     public void Collide(IBall ball){
         Debug.Log("Collide with ball");
         
-        wallLogic.Collide(ball, this);
+        goalLogic.Collide(ball, this);
     }
 }
