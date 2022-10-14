@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
 
-public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
+public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter, IBallCollision
 {
     public PaddleData paddleData;
     [SerializeField] private string inputAxisName;
@@ -13,7 +13,7 @@ public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
 
     private PaddleNetwork paddleNetwork;
 
-    private bool isControlling =false;
+    private bool hasAuthority =false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,13 +24,13 @@ public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
     {
         paddleInput = new PaddleInput(inputAxisName);
         paddleSimulation = new PaddleSimulation();
-        paddleNetwork = new PaddleNetwork(FindObjectOfType<SocketIOComponent>(), isControlling);
+        paddleNetwork = new PaddleNetwork(FindObjectOfType<SocketIOComponent>(), hasAuthority);
         paddleLogic = new PaddleLogic(this, paddleData, paddleInput, paddleSimulation, paddleNetwork);
     }
-    public void SetControlling(bool isControlling)
+    public void SetHasAuthority(bool hasAuthority)
     {
-        this.isControlling = isControlling;
-        if (!isControlling)
+        this.hasAuthority = hasAuthority;
+        if (!hasAuthority)
         {
             inputAxisName = "";
         }
@@ -46,9 +46,22 @@ public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter
        
     }
 
+    public void Collide(IBall ball)
+    {
+        paddleLogic.Collide(ball, this);
+    }
+
     public Vector3 Position
     {
         get => transform.position;
         set => transform.position = value;
+    }
+    private void OnCollisionEnter(Collision other) {
+        Debug.Log("Reflect from paddle");
+        IBall ball = other.gameObject.GetComponent<IBall>();
+        if (ball != null){
+            Collide(ball);
+        }
+        
     }
 }

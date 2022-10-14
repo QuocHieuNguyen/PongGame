@@ -13,7 +13,7 @@ public class BallSimulator
 
     public Vector3 UpdatePosition(Vector3 currentPosition, float deltaTime)
     {
-        return currentPosition + velocity * deltaTime;
+        return currentPosition;
     }
 
     public void ReflectVelocityVertically()
