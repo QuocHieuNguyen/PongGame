@@ -27,7 +27,7 @@ public class PaddleLogic
 
     public void Update(float deltaTime)
     {
-        if (!paddleNetwork.GetIsControlling())
+        if (!paddleNetwork.GetHasAuthority())
         {
             return;
         }
@@ -49,5 +49,10 @@ public class PaddleLogic
     }
     public void Collide(IBall ball, IBallCollision ballCollision){
         ball.OnBallCollisionEnter(ballCollision);
+    }
+
+    public void OnDisable()
+    {
+        paddleNetwork.UnsubscribeEvent();
     }
 }

@@ -26,4 +26,9 @@ public class BallNetwork {
     public void RequestReflectFromPaddle(){
         socketIOComponent.Emit("reflectFromPaddle");
     }
+
+    public void UnsubscribeEvent()
+    {
+        socketIOComponent.Off("updateBallPosition");
+    }
 }

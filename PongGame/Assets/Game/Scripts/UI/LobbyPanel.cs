@@ -8,23 +8,29 @@ using UnityEngine.UI;
 
 public class LobbyPanel : MonoBehaviour
 {
-    private SocketIOComponent socketReference;
-    [SerializeField] private Text nameText; 
+    [SerializeField] private Text nameText;
     [SerializeField] private Transform roomButtonParent;
     [SerializeField] private RoomButton roomButton;
     [SerializeField] private List<RoomButton> _roomButtons;
+    private SocketIOComponent socketReference;
 
     public SocketIOComponent SocketReference
     {
         get
         {
-            return socketReference = (socketReference == null) ? FindObjectOfType<SocketIOComponent>() : socketReference;
+            return socketReference =
+                (socketReference == null) ? FindObjectOfType<SocketIOComponent>() : socketReference;
         }
     }
+
     private void OnEnable()
     {
         SubscribeToEvent();
         InvokeEventToNetworkClient();
+    }
+
+    private void OnDisable()
+    {
     }
 
     private void InvokeEventToNetworkClient()
@@ -38,13 +44,17 @@ public class LobbyPanel : MonoBehaviour
         SocketReference.On("onDisplayLobbyData", OnFetchAllLobbyDataCallback);
         SocketReference.On("GetName", SetName);
         SocketReference.On("OnJoinSpecificLobby", ChangeToRoomScene);
+
         SocketReference.On("hostSucceed", HostRoomScene);
     }
 
-    public void RefreshLobby(){
+    public void RefreshLobby()
+    {
         SocketReference.Emit("fetchAllLobbyData");
     }
-    public void GetLobbyData(){
+
+    public void GetLobbyData()
+    {
         SocketReference.Emit("fetchAllLobbyData");
     }
 
@@ -52,12 +62,15 @@ public class LobbyPanel : MonoBehaviour
     {
         SocketReference.Emit("hostGame");
     }
-    private void OnFetchAllLobbyDataCallback(SocketIOEvent socketEvent){
+
+    private void OnFetchAllLobbyDataCallback(SocketIOEvent socketEvent)
+    {
         Debug.Log(socketEvent.data["lobbyArray"].Count);
         for (int i = 0; i < _roomButtons.Count; i++)
         {
             UnityEngine.Object.Destroy(_roomButtons[i].gameObject);
         }
+
         //_roomButtons.Clear();
         for (int i = 0; i < socketEvent.data["lobbyArray"].Count; i++)
         {
@@ -71,8 +84,8 @@ public class LobbyPanel : MonoBehaviour
             }));
             _roomButtons.Add(instance);
         }
-        //JSONNode jsonData = JSON.Parse(System.Text.Encoding.UTF8.GetString(socketEvent.data));
 
+        //JSONNode jsonData = JSON.Parse(System.Text.Encoding.UTF8.GetString(socketEvent.data));
     }
 
     private void ChangeToRoomScene(SocketIOEvent socketEvent)
@@ -82,39 +95,48 @@ public class LobbyPanel : MonoBehaviour
             Debug.Log("Switch room");
             ChangeRoom();
         }
-
     }
 
     private void HostRoomScene(SocketIOEvent socketIOEvent)
     {
+        Debug.Log("Room is loaded");
         ChangeRoom();
     }
+
     void ChangeRoom()
     {
         LoadScene(SceneList.ROOM);
     }
-    public void LeaveRoom(){
+
+    public void LeaveRoom()
+    {
         SocketReference.Close();
         LoadScene(SceneList.LOGIN);
     }
-    void LoadScene(string sceneName){
-        SceneManagementSystem.Instance.LoadLevel(sceneName, (value) =>
+
+    void LoadScene(string sceneName)
+    {
+        EmitEventDelay.Instance.ExecuteEventDelay((() =>
         {
-            SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOBBY);
-            
-        });
+            SceneManagementSystem.Instance.LoadLevel(sceneName, (value) =>
+            {
+                SocketReference.Off("onDisplayLobbyData");
+                SocketReference.Off("GetName");
+                SocketReference.Off("OnJoinSpecificLobby");
+                SocketReference.Off("hostSucceed");
+                SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOBBY);
+            });
+        }));
     }
+
     private void RequestGetName()
     {
         SocketReference.Emit("getName");
     }
+
     private void SetName(SocketIOEvent socketEvent)
     {
         string value = socketEvent.data["name"].ToString(false);
         nameText.text = value;
     }
-    private void OnDisable() {
-        
-    }
-
 }

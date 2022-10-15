@@ -10,21 +10,21 @@ public class PaddleNetwork
     private SocketIOComponent socketIOComponent;
     public Action<float, float> onUpdatePosition;
     private Vector2 currPos;
-    private bool isControlling = false;
+    private bool hasAuthority = false;
 
-    public PaddleNetwork(SocketIOComponent socketIOComponent, bool isControlling){
+    public PaddleNetwork(SocketIOComponent socketIOComponent, bool hasAuthority){
         this.socketIOComponent = socketIOComponent;
-        this.isControlling = isControlling;
+        this.hasAuthority = hasAuthority;
         ValidateSendData();
     }
 
-    public bool GetIsControlling()
+    public bool GetHasAuthority()
     {
-        return isControlling;
+        return hasAuthority;
     }
     public void ValidateSendData()
     {
-        if (isControlling)
+        if (hasAuthority)
         {
             socketIOComponent.On("updatePosition", UpdatePosition);
         }
@@ -48,5 +48,11 @@ public class PaddleNetwork
         float x = socketIOEvent.data["x"].f;
         float y = socketIOEvent.data["y"].f;
         onUpdatePosition?.Invoke(x, y);
+    }
+
+    public void UnsubscribeEvent()
+    {
+        socketIOComponent.Off("updatePosition", UpdatePosition);
+        socketIOComponent.Off("updatePositionState", UpdatePosition);
     }
 }
