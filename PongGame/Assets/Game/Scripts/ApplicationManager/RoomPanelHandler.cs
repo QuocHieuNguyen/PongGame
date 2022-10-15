@@ -30,8 +30,13 @@ public class RoomPanelHandler : MonoBehaviour
     }
     private void SubscribeToEvent()
     {
+        SocketReference.Off("DisplayPlayerData", SetName);
+        SocketReference.Off("GameIsStarted", ChangeToGameplay);
+        SocketReference.Off("OpponentEnterLobby", OnOpponentEnterLobby);
+        
+        
         SocketReference.On("DisplayPlayerData", SetName);
-        SocketReference.On("GameIsStarted", ChangeScene);
+        SocketReference.On("GameIsStarted", ChangeToGameplay);
         SocketReference.On("OpponentEnterLobby", OnOpponentEnterLobby);
 
     }
@@ -63,14 +68,25 @@ public class RoomPanelHandler : MonoBehaviour
         SocketReference.Emit("startGame");
     }
 
-    void ChangeScene(SocketIOEvent socketIOEvent)
+    public void LeaveRoom()
+    {
+        SocketReference.Emit("leftRoom");
+        ChangeScene(SceneList.LOBBY);
+    }
+    void ChangeToGameplay(SocketIOEvent socketIOEvent)
     {
         Debug.Log("Change Scene");
         SocketReference.isHost = true;
-        SceneManagementSystem.Instance.LoadLevel(SceneList.GAME_PLAY, (value)=>{
+        ChangeScene(SceneList.GAME_PLAY);
+    }
+
+    void ChangeScene(string sceneName)
+    {
+
+        SceneManagementSystem.Instance.LoadLevel(sceneName, (value)=>{
             SceneManagementSystem.Instance.UnLoadLevel(SceneList.ROOM);
             
-        });
+        });  
     }
     void OnOpponentEnterLobby(SocketIOEvent socketIOEvent){
         opponentNameText.text = socketIOEvent.data.ToString();

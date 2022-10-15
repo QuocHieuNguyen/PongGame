@@ -35,9 +35,15 @@ public class LobbyPanel : MonoBehaviour
 
     private void SubscribeToEvent()
     {
+        SocketReference.Off("onDisplayLobbyData", OnFetchAllLobbyDataCallback);
+        SocketReference.Off("GetName", SetName);
+        SocketReference.Off("OnJoinSpecificLobby", ChangeToRoomScene);
+        
+        
         SocketReference.On("onDisplayLobbyData", OnFetchAllLobbyDataCallback);
         SocketReference.On("GetName", SetName);
         SocketReference.On("OnJoinSpecificLobby", ChangeToRoomScene);
+        
         SocketReference.On("hostSucceed", HostRoomScene);
     }
 
@@ -87,10 +93,12 @@ public class LobbyPanel : MonoBehaviour
 
     private void HostRoomScene(SocketIOEvent socketIOEvent)
     {
+        Debug.Log("Room is loaded");
         ChangeRoom();
     }
     void ChangeRoom()
     {
+        
         LoadScene(SceneList.ROOM);
     }
     public void LeaveRoom(){
@@ -98,11 +106,17 @@ public class LobbyPanel : MonoBehaviour
         LoadScene(SceneList.LOGIN);
     }
     void LoadScene(string sceneName){
-        SceneManagementSystem.Instance.LoadLevel(sceneName, (value) =>
+        
+        EmitEventDelay.Instance.ExecuteEventDelay((() =>
         {
-            SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOBBY);
-            
-        });
+            SceneManagementSystem.Instance.LoadLevel(sceneName, (value) =>
+            {
+                SocketReference.Off("hostSucceed", HostRoomScene);
+                SceneManagementSystem.Instance.UnLoadLevel(SceneList.LOBBY);
+
+            });
+        }));
+
     }
     private void RequestGetName()
     {
