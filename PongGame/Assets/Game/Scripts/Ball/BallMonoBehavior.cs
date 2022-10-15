@@ -30,8 +30,18 @@ public class BallMonoBehavior : MonoBehaviour, ILocalPositionAdapter, IBall
     {
         _ballLogic.Update();
     }
+
+    public void StopMove()
+    {
+        _ballLogic.SetMove(false);
+    }
     public void OnBallCollisionEnter(IBallCollision collider)
     {
         _ballLogic.OnCollisionEnter(collider);
+    }
+
+    private void OnDisable()
+    {
+        _ballLogic.OnDisable();
     }
 }

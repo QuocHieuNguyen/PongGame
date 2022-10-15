@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,5 +64,10 @@ public class PaddleMonoBehavior : MonoBehaviour, IPositionAdapter, IBallCollisio
             Collide(ball);
         }
         
+    }
+
+    private void OnDisable()
+    {
+        paddleLogic.OnDisable();
     }
 }

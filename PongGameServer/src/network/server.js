@@ -61,7 +61,7 @@ module.exports = class Server {
         //Preform lobby clean up
         server.lobbys[connection.player.lobby].onLeaveLobby(connection);
     }
-
+    
     onAttemptToJoinGame(connection = Connection) {
         //Look through lobbies for a gamelobby
         //check if joinable
@@ -234,6 +234,15 @@ module.exports = class Server {
         });
         if (gameLobbies.length > 0){
             gameLobbies[0].ReflectFromPaddle(connection)
+        }
+    }
+    PlayerIsLose(connection = Connection){
+        let server = this
+        let gameLobbies = server.lobbys.filter(item => {
+            return item.id == connection.lobby.id;
+        });
+        if (gameLobbies.length > 0){
+            gameLobbies[0].playerIsLose(connection)
         }
     }
 

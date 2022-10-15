@@ -220,6 +220,18 @@ namespace SocketIO
 			}
 		}
 
+		public void Off(string ev)
+		{
+			if (!handlers.ContainsKey(ev)) {
+#if SOCKET_IO_DEBUG
+				debugMethod.Invoke("[SocketIO] No callbacks registered for event: " + ev);
+#endif
+				return;
+			}
+			handlers.Remove(ev);
+			
+		}
+
 		public void Emit(string ev)
 		{
 			EmitMessage(-1, string.Format("[\"{0}\"]", ev));

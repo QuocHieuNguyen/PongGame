@@ -30,9 +30,9 @@ public class RoomPanelHandler : MonoBehaviour
     }
     private void SubscribeToEvent()
     {
-        SocketReference.Off("DisplayPlayerData", SetName);
-        SocketReference.Off("GameIsStarted", ChangeToGameplay);
-        SocketReference.Off("OpponentEnterLobby", OnOpponentEnterLobby);
+        SocketReference.Off("DisplayPlayerData");
+        SocketReference.Off("GameIsStarted");
+        SocketReference.Off("OpponentEnterLobby");
         
         
         SocketReference.On("DisplayPlayerData", SetName);

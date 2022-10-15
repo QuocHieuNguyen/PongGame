@@ -12,6 +12,10 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private GoalMonoBehavior hostGoal, opponentGoal;
     public Transform controllingPlayerPosition, opponentPosition;
+
+    public BallMonoBehavior ballMonoBehavior;
+    public GameplayUIManager gameplayUIManager;
+    
     public SocketInterface SocketReference
     {
         get
@@ -48,5 +52,44 @@ public class GameplayManager : MonoBehaviour
         paddleOpponent.Init();
         SceneManagementSystem.Instance.MoveObjectToScene(paddleHost.gameObject, SceneList.GAME_PLAY);
         SceneManagementSystem.Instance.MoveObjectToScene(paddleOpponent.gameObject, SceneList.GAME_PLAY);
+        SubscribeToEvent();
     }
+
+    void SubscribeToEvent()
+    {
+        SocketReference.On("playerIsLose", PlayerIsLose);
+        SocketReference.On("youAreLose", YouAreLose);
+    }
+
+    void PlayerIsLose(SocketIOEvent socketIOEvent)
+    {
+        Debug.Log("Other player is lose");
+        DisplayResult("you are win");
+    }
+
+    void YouAreLose(SocketIOEvent socketIOEvent)
+    {
+        Debug.Log("you are lose");
+        DisplayResult("you are lose");
+    }
+
+    void DisplayResult(string resultText)
+    {
+        ballMonoBehavior.StopMove();
+        gameplayUIManager.SetResultText(resultText);
+        gameplayUIManager.EnableResult();
+        gameplayUIManager.AddListener(LeaveButtonCallback);
+    }
+
+    void LeaveButtonCallback()
+    {
+        SocketReference.Off("playerIsLose");
+        SocketReference.Off("youAreLose");
+        SocketReference.Emit("leftRoom");
+        SceneManagementSystem.Instance.LoadLevel(SceneList.LOBBY, (value)=>{
+            SceneManagementSystem.Instance.UnLoadLevel(SceneList.GAME_PLAY);
+            
+        });
+    }
+        
 }

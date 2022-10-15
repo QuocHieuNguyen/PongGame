@@ -62,6 +62,9 @@ module.exports = class Connection {
         socket.on('reflectFromPaddle', ()=>{
             server.ReflectFromPaddle(connection)
         })
+        socket.on('playerIsLose', ()=>{
+            server.PlayerIsLose(connection)
+        })
         // socket.on('fireBullet', function(data) {
         //     connection.lobby.onFireBullet(connection, data);
         // });
