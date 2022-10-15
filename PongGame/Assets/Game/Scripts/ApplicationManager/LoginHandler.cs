@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using SocketIO;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class LoginHandler : MonoBehaviour
 {
     [SerializeField] private InputField inputField;
+    [SerializeField] private InputField ipInputField;
 
     private SocketIOComponent socketReference;
 
@@ -15,6 +17,11 @@ public class LoginHandler : MonoBehaviour
         {
             return socketReference = (socketReference == null) ? FindObjectOfType<SocketIOComponent>() : socketReference;
         }
+    }
+
+    private void Start()
+    {
+        ipInputField.text = SocketReference.url;
     }
 
     public void Connect()
