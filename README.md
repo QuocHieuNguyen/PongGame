@@ -15,3 +15,11 @@ The project is inspired by two other projects:
 [Kalmalyzer/Pong](https://github.com/Kalmalyzer/Pong)
 - Server: 
 [Multiplayer_Game_With_Unity_And_NodeJS](https://github.com/oohicksyoo/Youtube-Multiplayer_Game_With_Unity_And_NodeJS)
+
+Overall architecture of the client:
+
+![Overall architecture image](docs\Pong.drawio.png "Overall architecture")
+
+For each entity, the MonoBehavior class acts as a facade, containing separated classes for separated logic.
+
+In this case, the network class has the responsibilty of communicating to the server, including notifying the logic class about server-sent event, or emit the event to the server.
