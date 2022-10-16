@@ -18,7 +18,7 @@ The project is inspired by two other projects:
 
 Overall architecture of the client:
 
-![Overall architecture image](docs\Pong.drawio.png "Overall architecture")
+![Overall architecture image](/docs/Pong.drawio.png "Overall architecture")
 
 For each entity, the MonoBehavior class acts as a facade, containing separated classes for separated logic.
 
