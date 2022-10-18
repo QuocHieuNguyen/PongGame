@@ -23,3 +23,24 @@ Overall architecture of the client:
 For each entity, the MonoBehavior class acts as a facade, containing separated classes for separated logic.
 
 In this case, the network class has the responsibilty of communicating to the server, including notifying the logic class about server-sent event, or emit the event to the server.
+
+## Getting Started
+
+Start the server:
+
+1. Change the directory
+  ```sh
+  cd PongGameServer
+  ```
+2. Install NPM packages
+
+  ```sh
+  npm install
+  ```
+3. Start the server
+  ```sh
+  npm start
+  ```
+4. Start the client from 
+
+_PongGame\Assets\Game\Scenes\Intro.unity_
