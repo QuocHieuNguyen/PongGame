@@ -111,17 +111,7 @@ module.exports = class GameLobbby extends lobbyBase {
         if (lobby.ball != null) {
             let ball = lobby.ball
             ball.onUpdate();
-            let returnData = {
-                id: ball.id,
-                position: {
-                    x: ball.position.x,
-                    y: ball.position.y
-                }
-            }
 
-            connections.forEach(connection => {
-                connection.socket.emit('updateBallPosition', returnData);
-            });
         }
     }
 
@@ -133,7 +123,7 @@ module.exports = class GameLobbby extends lobbyBase {
             lobby.connections.forEach(_connection => {
                 _connection.socket.emit('GameIsStarted');
             });
-            this.ball = new Ball()
+            this.ball = new Ball(lobby.connections)
         } else {
             console.log("no start game permission granted to non-host")
         }
@@ -141,7 +131,6 @@ module.exports = class GameLobbby extends lobbyBase {
     UpdatePosition(connection = Connection, pos) {
         let lobby = this
         let position = new Vector2(pos.x, pos.y);
-        console.log(pos)
         connection.player.position = position
         connection.socket.broadcast.to(lobby.id).emit('updatePositionState', position)
         connection.socket.emit('updatePosition', position)
@@ -214,5 +203,8 @@ module.exports = class GameLobbby extends lobbyBase {
                 c.socket.emit('youAreLose')
             }
         });
+    }
+    onInputBuffer(connection = Connection, inputPayload){
+        this.ball.EnqueueClientInput(inputPayload)
     }
 }

@@ -22,7 +22,7 @@ public class BallMonoBehavior : MonoBehaviour, ILocalPositionAdapter, IBall
     private void Awake()
     {
         _ballSimulator = new BallSimulator(InitialVelocity);
-        _ballNetwork = new BallNetwork(FindObjectOfType<SocketIOComponent>());
+        _ballNetwork = new BallNetwork(FindObjectOfType<SocketIOComponent>(), transform);
         _ballLogic = new BallLogic(_ballSimulator,_ballNetwork,  this);
     }
 

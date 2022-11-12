@@ -65,7 +65,6 @@ public class LobbyPanel : MonoBehaviour
 
     private void OnFetchAllLobbyDataCallback(SocketIOEvent socketEvent)
     {
-        Debug.Log(socketEvent.data["lobbyArray"].Count);
         for (int i = 0; i < _roomButtons.Count; i++)
         {
             UnityEngine.Object.Destroy(_roomButtons[i].gameObject);
@@ -99,7 +98,6 @@ public class LobbyPanel : MonoBehaviour
 
     private void HostRoomScene(SocketIOEvent socketIOEvent)
     {
-        Debug.Log("Room is loaded");
         ChangeRoom();
     }
 

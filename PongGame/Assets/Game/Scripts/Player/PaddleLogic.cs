@@ -38,7 +38,6 @@ public class PaddleLogic
         Vector3 newPos = new Vector3(curPos.x, yPos * paddleData.PositionScale, curPos.z);
         if (newPos != curPos)
         {
-            Debug.Log("Send Data");
             paddleNetwork.SendData(curPos.x, yPos * paddleData.PositionScale);
         }
         

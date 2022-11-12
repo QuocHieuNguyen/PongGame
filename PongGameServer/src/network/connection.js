@@ -65,26 +65,9 @@ module.exports = class Connection {
         socket.on('playerIsLose', ()=>{
             server.PlayerIsLose(connection)
         })
-        // socket.on('fireBullet', function(data) {
-        //     connection.lobby.onFireBullet(connection, data);
-        // });
-
-        // socket.on('collisionDestroy', function(data) {
-        //     connection.lobby.onCollisionDestroy(connection, data);
-        // });
-
-        // socket.on('updatePosition', function(data) {
-        //     player.position.x = data.position.x;
-        //     player.position.y = data.position.y;
-
-        //     socket.broadcast.to(connection.lobby.id).emit('updatePosition', player);
-        // });
-
-        // socket.on('updateRotation', function(data) {
-        //     player.tankRotation = data.tankRotation;
-        //     player.barrelRotation = data.barrelRotation;
-
-        //     socket.broadcast.to(connection.lobby.id).emit('updateRotation', player);
-        // });
+        socket.on('updateBallBufferInput', (inputPayload)=> {
+            server.HandleBallBufferInput(connection, inputPayload)
+            console.log("connection.js: " + inputPayload)
+        })
     }
 }

@@ -21,10 +21,12 @@ public class BallLogic
         this.localPositionAdapter = localPositionAdapter;
         ballNetwork.onUpdatePosition += UpdatePosition;
         ballCanMove = true;
+        syncTransform = localPositionAdapter.LocalPosition;
     }
     public void Update(){
-        // localPositionAdapter.LocalPosition 
-        // = Vector3.Lerp(localPositionAdapter.LocalPosition, syncTransform, Time.deltaTime);
+         localPositionAdapter.LocalPosition 
+         = Vector3.Lerp(localPositionAdapter.LocalPosition, syncTransform, 0.1f);
+        ballNetwork.Update();
     }
 
     public void SetMove(bool value)
@@ -39,7 +41,7 @@ public class BallLogic
         }
         Vector3 currentPos = new Vector3(x,y, localPositionAdapter.LocalPosition.z);
         Vector3 newPos = ballSimulator.UpdatePosition(currentPos, Time.deltaTime);
-        localPositionAdapter.LocalPosition = newPos;
+        //localPositionAdapter.LocalPosition = newPos;
         syncTransform = newPos;
     }
     public void OnCollisionEnter(IBallCollision collider)
@@ -47,8 +49,10 @@ public class BallLogic
         Debug.Log("Reflect from wall");
         if (collider is WallMonoBehavior){
             ballNetwork.RequestReflectFromWall();
+            ballSimulator.ReflectVelocityVertically();
         }else if (collider is PaddleMonoBehavior){
             ballNetwork.RequestReflectFromPaddle();
+            ballSimulator.ReflectVelocityHorizontally();
         }
        
         syncTransform = localPositionAdapter.LocalPosition;
